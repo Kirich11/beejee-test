@@ -14,6 +14,7 @@ services:
       DB_USER: beejee
       DB_PASSWORD: beejee!
       DB_NAME: beejee
+      DATABASE_URL: "mysql://beejee:beejee!@db/beejee"
     depends_on:
       - db
     volumes:

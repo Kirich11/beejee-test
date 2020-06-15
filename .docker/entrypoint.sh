@@ -5,7 +5,22 @@ set -e
 # Runs application with nginx and FPM and makes some preparations for application
 # migrations, folders structure, permissions, etc.
 sleep 10
-cp .env.example .env
+file=./.env
+if test -f "$file"; then
+    echo ".env exists."
+else
+    echo create .env file
+    touch .env
+    a=$DATABASE_URL
+    b='DATABASE_URL='
+    echo "${b}\"${a}\"" >> .env
+fi
+cat .env
+ls -la
+chown root:root /home/www-data/.env
+chmod 664 /home/www-data/.env
+ls -la
+sleep 5
 echo Run migrations
 vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 echo Run seeds

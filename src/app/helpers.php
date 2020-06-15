@@ -5,6 +5,6 @@
 if (!function_exists('env')) {
     function env($path)
     {
-        return $_ENV[$path];
+        return getenv($path);
     }
 }
