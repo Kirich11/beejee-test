@@ -20,8 +20,8 @@ vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 echo Run seeds
 php ./database/init.php
 echo Give permissions to www-data to mounted volume directories
-chown -R www-data: /home/www-data/public
-chown -R www-data: /home/www-data/storage
+#chown -R www-data: /home/www-data/public
+#chown -R www-data: /home/www-data/storage
 echo "Check nginx is fine"
 nginx -t
 echo "Run FPM"
