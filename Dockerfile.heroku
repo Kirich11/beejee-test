@@ -1,7 +1,9 @@
 FROM php:7.4-fpm-alpine
 
 RUN apk add \
-    libzip libzip-dev postgresql-dev\
+    libzip libzip-dev \
+    gettext \
+    postgresql-dev\
     nginx && \
     docker-php-ext-install bcmath zip mysqli pdo_mysql pdo pdo_pgsql && \
     apk del libzip-dev && \
@@ -18,7 +20,8 @@ RUN chmod +x .docker/entrypoint_heroku.sh && \
     rm -rf /usr/local/etc/php-fpm.d && \
     mv .docker/php/php-fpm.d /usr/local/etc/php-fpm.d && \
     mv -f .docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf && \
-    cp -rf .docker/nginx/heroku/* /etc/nginx && \
+    envsubst "\$PORT" < .docker/nginx/local/conf.d/default.conf > /etc/nginx/conf.d/default.conf  && \
+    cp -rf .docker/nginx/heroku/nginx.conf /etc/nginx/ && \
     rm -rf .docker
 
 WORKDIR /home/www-data
