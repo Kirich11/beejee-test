@@ -15,19 +15,13 @@ else
     b='DATABASE_URL='
     echo "${b}\"${a}\"" >> .env
 fi
-cat .env
-ls -la
-chown root:root /home/www-data/.env
-chmod 664 /home/www-data/.env
-ls -la
-sleep 5
 echo Run migrations
 vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 echo Run seeds
 php ./database/init.php
 echo Give permissions to www-data to mounted volume directories
-chown -R www-data: /home/www-data/public
-chown -R www-data: /home/www-data/storage
+sudo chown -R www-data: /home/www-data/public
+sudo chown -R www-data: /home/www-data/storage
 echo "Check nginx is fine"
 nginx -t
 echo "Run FPM"
