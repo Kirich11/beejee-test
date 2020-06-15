@@ -1,0 +1,24 @@
+{% if lastPage > 1 %}
+
+<nav aria-label="Page navigation example">
+	<ul class="pagination">
+		<li class="page-item">
+			{% if currentPage > 1 %}
+				{% set nextPage = currentPage - 1 %}
+				<a class="page-link" href="{{ '?page=' ~ nextPage ~ '&' ~ queryString }}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			{% endif %}
+		</li>
+		<li class="page-item"><a class="page-link" href="#">{{ currentPage }}</a></li>
+		<li class="page-item">
+			{% if lastPage > currentPage %}
+				{% set nextPage = currentPage + 1 %}
+				<a class="page-link" href="{{ '?page=' ~ nextPage ~ '&' ~ queryString }}" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			{% endif %}
+		</li>
+	</ul>
+</nav>
+{% endif %}

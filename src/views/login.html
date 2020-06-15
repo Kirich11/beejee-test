@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+    .login {
+        height: 400px;
+    }
+    .error {
+        color: red;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row login">
+    <div class="row align-items-center mx-auto">
+        <form method="POST" action="/users/login">
+            <div class="form-group">
+                <label for="login">Login</label>
+                <input class="form-control" name="login" id="login">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            {% for error in errors %}
+                <small class="error">{{ error|escape }}</small>
+            {% endfor %}
+        </form>
+    </div>
+</div>
+{% endblock %}
