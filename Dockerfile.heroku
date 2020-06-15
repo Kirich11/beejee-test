@@ -4,7 +4,7 @@ RUN apk add \
     libzip libzip-dev postgresql-dev\
     nginx && \
     docker-php-ext-install bcmath zip mysqli pdo_mysql pdo pdo_pgsql && \
-    apk del libzip-dev postgresql-dev && \
+    apk del libzip-dev && \
     mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini && \
     curl -s https://getcomposer.org/installer | php &&\
     mv composer.phar /usr/local/bin/composer && \
