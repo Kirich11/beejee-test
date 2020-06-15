@@ -36,6 +36,7 @@ if (empty($roles)) {
     $user->setEmail('admin@admin.admin');
     $user->setLogin('admin');
     $user->setPassword('123');
+    $user->setRole($role);
     $manager->persist($user);
     
     $manager->flush();
