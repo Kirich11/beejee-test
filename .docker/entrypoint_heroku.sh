@@ -15,6 +15,7 @@ else
     b='DATABASE_URL='
     echo "${b}\"${a}\"" >> .env
 fi
+envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /tmp/conf  && mv /tmp/conf /etc/nginx/conf.d/default.conf
 echo Run migrations
 vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 echo Run seeds
