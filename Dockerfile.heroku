@@ -22,7 +22,8 @@ RUN chmod +x .docker/entrypoint_heroku.sh && \
     mv -f .docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf && \
     envsubst '\$PORT' < .docker/nginx/local/conf.d/default.conf > /etc/nginx/conf.d/default.conf  && \
     cp -rf .docker/nginx/heroku/nginx.conf /etc/nginx/ && \
-    rm -rf .docker
+    rm -rf .docker && \
+    env
 
 WORKDIR /home/www-data
 COPY src ./
