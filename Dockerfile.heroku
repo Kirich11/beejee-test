@@ -18,7 +18,8 @@ RUN chmod +x .docker/entrypoint_heroku.sh && \
     rm -rf /usr/local/etc/php-fpm.d && \
     mv .docker/php/php-fpm.d /usr/local/etc/php-fpm.d && \
     mv -f .docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf && \
-    cp -rf .docker/nginx /etc && \
+    cp -rf .docker/nginx/conf.d /etc && \
+    cp -rf .docker/nginx/nginx_heroku.conf /etc/nginx/nginx.conf && \
     rm -rf .docker
 
 WORKDIR /home/www-data
@@ -26,7 +27,7 @@ COPY src ./
 
 RUN ls -la && composer install
 
-USER root
-#RUN chown -R www-data:www-data ./
+RUN adduser -D myuser
+USER myuser
 
 ENTRYPOINT "entrypoint"
