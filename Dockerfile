@@ -1,9 +1,9 @@
 FROM php:7.4-fpm-alpine
 
 RUN apk add \
-    libzip libzip-dev \
+    libzip libzip-dev postgresql-dev\
     nginx && \
-    docker-php-ext-install bcmath zip mysqli pdo_mysql && \
+    docker-php-ext-install bcmath zip mysqli pdo_mysql pdo pdo_pgsql && \
     apk del libzip-dev && \
     mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini && \
     curl -s https://getcomposer.org/installer | php &&\
@@ -29,4 +29,4 @@ RUN ls -la && composer install
 USER root
 #RUN chown -R www-data:www-data ./
 
-ENTRYPOINT "entrypoint" $DB_HOST $DB_USER $DB_PASSWORD $DB_NAME
+ENTRYPOINT "entrypoint"

@@ -5,6 +5,7 @@ set -e
 # Runs application with nginx and FPM and makes some preparations for application
 # migrations, folders structure, permissions, etc.
 sleep 10
+cp .env.example .env
 echo Run migrations
 vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 echo Run seeds
