@@ -16,8 +16,8 @@ else
     echo "${b}\"${a}\"" >> .env
 fi
 env
-envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /tmp/conf  && mv /tmp/conf /etc/nginx/conf.d/default.conf
-cat /tmp/conf
+envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.template  && mv /etc/nginx/conf.d/default.template /etc/nginx/conf.d/default.conf
+cat /etc/nginx/conf.d/default.template
 cat /etc/nginx/conf.d/default.conf
 echo Run migrations
 vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
