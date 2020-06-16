@@ -18,7 +18,7 @@ RUN chmod +x .docker/entrypoint.sh && \
     rm -rf /usr/local/etc/php-fpm.d && \
     mv .docker/php/php-fpm.d /usr/local/etc/php-fpm.d && \
     mv -f .docker/php/php-fpm.conf /usr/local/etc/php-fpm.conf && \
-    cp -rf .docker/nginx/local/* /etc/nginx && \
+    cp -rf .docker/nginx /etc && \
     rm -rf .docker
 
 WORKDIR /home/www-data
