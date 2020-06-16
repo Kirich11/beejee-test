@@ -34,6 +34,6 @@ mkdir /var/tmp/nginx
 touch /etc/nginx/conf.d/default.template && \
     envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.template && \
     mv /etc/nginx/conf.d/default.template /etc/nginx/conf.d/default.conf && \
-    php-fpm -D && \
+    php-fpm -D -R && \
     nginx
     
