@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+	.icon-arrow {
+		width: 12px;
+    	vertical-align: baseline;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+	<div>
+		<h2>Tasks</h2>
+		<a href="/tasks/create"><button>Add task</button></a>
+	</div>
+	{% if isAdmin == false %}
+        <a href="/users/login"><button>Login</button></a>
+    {% endif %}
+    {% if isAdmin == true %}
+        <a href="/admin"><h2>Admin</h2></a>
+        <a href="/users/logout"><button>Logout</button></a>
+    {% endif %}
+</div>
+<table class="table">
+	<thead>
+		<tr>
+			<td scope="col"># <a href="{{ '?page=' ~ currentPage ~ '&sort=id' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col">Email <a href="{{ '?page=' ~ currentPage ~ '&sort=email' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col">Name <a href="{{ '?page=' ~ currentPage ~ '&sort=name' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col">Task </td>
+			<td scope="col">Status <a href="{{ '?page=' ~ currentPage ~ '&sort=status' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col"></td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for model in data %}
+		<tr>
+			<th scope="row">{{ model.id|escape }}</th>
+			<td>{{ model.email|escape }}</td>
+			<td>{{ model.name|escape }}</td>
+			<td>{{ model.value|escape }}</td>
+			<td>{{ model.status.value|escape }}</td>
+			{% if model.created != model.updated %}
+				<td>Updated by Admin</td>
+			{% endif %}
+			{% if model.created == model.updated %}
+				<td></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% include 'pagination.html' with {
+    currentPage: currentPage,
+	lastPage: lastPage,
+	queryString: queryString
+} only %}
+
+{% for success in successes %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+	{{ success|escape }}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+  </div>
+{% endfor %}
+{% endblock %}

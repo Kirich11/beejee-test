@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+	.icon-arrow {
+		width: 12px;
+    	vertical-align: baseline;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+	<div>
+		<a href="/tasks"><h2>Tasks</h2></a>
+		<a href="/tasks/create"><button>Add task</button></a>
+	</div>
+	<a href="/admin"><h2>Admin</h2></a>
+	<a href="/users/logout"><button>Logout</button></a>
+</div>
+{% for model in data %}
+<form method="POST" action="/tasks/update" id="{{ 'updateForm' ~ model.id }}"></form>
+{% endfor %}
+<table class="table">
+	<thead>
+		<tr>
+			<td scope="col"># <a href="{{ '?page=' ~ currentPage ~ '&sort=id' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col">Email <a href="{{ '?page=' ~ currentPage ~ '&sort=email' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col">Name <a href="{{ '?page=' ~ currentPage ~ '&sort=name' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col">Task </td>
+			<td scope="col">Done <a href="{{ '?page=' ~ currentPage ~ '&sort=status' ~ '&desc=' ~ desc }}"><img class="icon-arrow" src="/arrows.png"></img></a></td>
+			<td scope="col"></td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for model in data %}
+		<tr>
+			<th scope="row">
+				<input hidden name="id" id="id" value="{{ model.id|escape }}" form="{{ 'updateForm' ~ model.id }}">
+				{{ model.id|escape }}
+			</th>
+			<td>
+				<input class="form-control" type="email" name="email" id="email" value="{{ model.email|escape }}" form="{{ 'updateForm' ~ model.id }}"></input>
+			</td>
+			<td>
+				<input class="form-control" name="name" id="name" value="{{ model.name|escape }}" form="{{ 'updateForm' ~ model.id }}"></input>
+			</td>
+			<td>
+				<input class="form-control" name="value" id="value" value="{{ model.value|escape }}" form="{{ 'updateForm' ~ model.id }}"></input>
+			</td>
+			<td>
+				{% if model.status.id == 1 %}
+					<input type="checkbox" class="form-control" name="status" id="status" value="2" form="{{ 'updateForm' ~ model.id }}"></input>
+				{% endif %}
+				{% if model.status.id == 2 %}
+					<input type="checkbox" class="form-control" name="status" id="status" checked value="2" form="{{ 'updateForm' ~ model.id }}"></input>
+				{% endif %}
+			</td>
+			<td>
+				<button type="submit" class="btn btn-primary" form="{{ 'updateForm' ~ model.id }}">Submit</button>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% include 'pagination.html' with {
+    currentPage: currentPage,
+	lastPage: lastPage,
+	queryString: queryString
+} only %}
+{% for error in errors %}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+	{{ error|escape }}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+  </div>
+{% endfor %}
+{% for success in successes %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+	{{ success|escape }}
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+  </div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+    .login {
+        height: 400px;
+    }
+
+    .error {
+        color: red;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    {% if isAdmin == false %}
+    <a href="/tasks">
+        <h2>Tasks</h2>
+    </a>
+    <a href="/users/login"><button>Login</button></a>
+    {% endif %}
+    {% if isAdmin == true %}
+    <a href="/tasks">
+        <h2>Tasks</h2>
+    </a>
+    <a href="/admin">
+        <h2>Admin</h2>
+    </a>
+    <a href="/users/logout"><button>Logout</button></a>
+    {% endif %}
+</div>
+<div class="row login">
+    <div class="row align-items-center mx-auto">
+        <form method="POST" action="/tasks">
+            <div class="form-group">
+                <label for="login">Name</label>
+                <input class="form-control" name="name" id="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" id="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Text</label>
+                <input type="text" class="form-control" name="value" id="value">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button><br />
+            {% for error in errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error|escape }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </form>
+    </div>
+</div>
+{% endblock %}
