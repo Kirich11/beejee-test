@@ -31,4 +31,6 @@ RUN ls -la && composer install
 RUN adduser -D myuser
 USER myuser
 
-ENTRYPOINT "entrypoint"
+CMD /bin/h -c "entrypoint"
+CMD /bin/sh -c "touch /etc/nginx/conf.d/default.template && envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.template  && mv /etc/nginx/conf.d/default.template /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+

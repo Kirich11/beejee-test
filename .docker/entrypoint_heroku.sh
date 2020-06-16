@@ -15,10 +15,6 @@ else
     b='DATABASE_URL='
     echo "${b}\"${a}\"" >> .env
 fi
-env
-touch /etc/nginx/conf.d/default.template
-envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.template  && mv /etc/nginx/conf.d/default.template /etc/nginx/conf.d/default.conf
-cat /etc/nginx/conf.d/default.conf
 echo Run migrations
 vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 echo Run seeds
@@ -28,7 +24,3 @@ echo Give permissions to www-data to mounted volume directories
 #chown -R www-data: /home/www-data/storage
 echo "Check nginx is fine"
 nginx -t
-echo "Run FPM"
-php-fpm
-echo "Run NGINX as root process"
-nginx -g 'daemon off;'
