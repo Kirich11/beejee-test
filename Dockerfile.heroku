@@ -28,7 +28,7 @@ COPY src ./
 
 RUN ls -la && composer install
 
-RUN nonroot -D nonroot
+RUN adduser -D nonroot && apk add --update sudo && echo "nonroot ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER nonroot
 
 ENTRYPOINT [ "entrypoint" ]
