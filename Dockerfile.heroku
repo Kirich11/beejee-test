@@ -23,7 +23,7 @@ RUN chmod +x .docker/entrypoint_heroku.sh && \
     cp -rf .docker/nginx/heroku/* /etc/nginx/ && \
     rm -rf .docker && \
     # to run php-fpm (socker directory)
-    chmod a+w /var/run/php-fpm && \    
+    chmod a+w /run/php-fpm && \    
     # to run nginx (default pid directory and tmp directory)
     chmod -R a+w /run/nginx && \
     chmod -R a+wx /var/tmp/nginx
