@@ -35,4 +35,4 @@ touch /etc/nginx/conf.d/default.template && \
     envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.template && \
     mv /etc/nginx/conf.d/default.template /etc/nginx/conf.d/default.conf && \
     nginx && \
-    php-fpm
+    php-fpm restart
