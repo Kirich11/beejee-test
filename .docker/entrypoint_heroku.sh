@@ -34,4 +34,4 @@ sed -i -E "s/^user .*/user $(whoami);/" /etc/nginx/nginx.conf
 touch /etc/nginx/conf.d/default.template && \
     envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.template && \
     mv /etc/nginx/conf.d/default.template /etc/nginx/conf.d/default.conf && \
-    nginx -g 'daemon off;'
+    nginx
