@@ -31,4 +31,4 @@ nginx -t
 echo "Run FPM"
 php-fpm
 echo "Run NGINX as root process"
-nginx
+nginx -g 'daemon off;'
