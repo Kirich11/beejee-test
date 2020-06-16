@@ -25,6 +25,7 @@
     "scripts": {
         "post-autoload-dump":[
             "cp .env.example .env",
+            "vendor/bin/doctrine orm:schema-tool:update --force --dump-sql",
             "php database/init.php"
         ]
     }
