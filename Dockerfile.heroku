@@ -28,7 +28,6 @@ COPY src ./
 
 RUN ls -la && composer install
 
-RUN adduser -D www-data && apk add --update sudo && echo "nonroot ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER www-data
 
 ENTRYPOINT [ "entrypoint" ]
