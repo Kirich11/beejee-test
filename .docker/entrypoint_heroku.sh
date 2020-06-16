@@ -20,7 +20,18 @@ vendor/bin/doctrine orm:schema-tool:update --force --dump-sql
 echo Run seeds
 php ./database/init.php
 echo Give permissions to www-data to mounted volume directories
-#chown -R www-data: /home/www-data/public
-#chown -R www-data: /home/www-data/storage
-echo "Check nginx is fine"
-nginx -t
+# "/var/tmp/nginx" owned by "nginx" user is unusable on heroku dyno so re-create on runtime
+mkdir /var/tmp/nginx
+
+# make php-fpm be able to listen request from nginx (current user is nginx executor)
+sed -i -E "s/^;listen.owner = .*/listen.owner = $(whoami)/" /etc/php7.4/php-fpm.d/www.conf
+
+# make current user the executor of nginx and php-fpm expressly for local environment
+sed -i -E "s/^user = .*/user = $(whoami)/" /etc/php7.4/php-fpm.d/www.conf
+sed -i -E "s/^group = (.*)/;group = \1/" /etc/php7.4/php-fpm.d/www.conf
+sed -i -E "s/^user .*/user $(whoami);/" /etc/nginx/nginx.conf
+
+touch /etc/nginx/conf.d/default.template && \
+    envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.template && \
+    mv /etc/nginx/conf.d/default.template /etc/nginx/conf.d/default.conf && \
+    nginx -g 'daemon off;'
